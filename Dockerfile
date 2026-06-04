@@ -4,8 +4,6 @@ COPY . /app
 RUN npm install
 RUN npm run build
 
-FROM nginx:alpine
-WORKDIR /spc
-COPY --from=Builder /app/dist /usr/share/nginx/html/
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]         
+FROM cgr.dev/chainguard/nginx
+COPY --chown=65532:65532 --from=Builder /app/dist/  /usr/share/nginx/html/
+EXPOSE 8080
