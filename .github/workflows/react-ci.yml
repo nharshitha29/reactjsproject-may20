@@ -19,11 +19,23 @@ jobs:
          - name: Install Dependencies
            run: npm install
 
-         - name: Run Unit Tests
-           run: npm test 
+         - name: Run Tests
+           run: |
+              npx vitest --run \
+              --reporter=default \
+              --reporter=junit \
+              --outputFile=test-results.xml
+
+         - name: Publish Test Results
+           uses: EnricoMi/publish-unit-test-result-action@v2
+           if: always()
+           with:
+              files: |
+                 test-results.xml
 
          - name: Build React App
            run: npm run build
+         
 
          - name: Upload Build Artifact
            uses: actions/upload-artifact@v4
