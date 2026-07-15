@@ -1,0 +1,31 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-1
+  labels:
+     app: web1
+  annotations:
+     kubernetes.io/change-cause: "react"
+spec:
+   minReadySeconds: 3
+   replicas: 3
+   revisionHistoryLimit: 10
+   selector:
+     matchLabels:
+         app: web1
+   strategy:
+     type: RollingUpdate
+     rollingUpdate:
+         maxSurge: 25%
+         maxUnavailable: 25%
+   template:
+     metadata:
+         labels:
+            app: web1 
+     spec:
+       containers:
+         - name: react
+           image: nharshitha29/react-app:latest
+           ports:
+              - containerPort: 8080 

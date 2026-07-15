@@ -102,3 +102,13 @@ jobs:
 
          - name: Verify Cluster
            run: kubectl get nodes
+         
+         - name: Deploy Application
+           run: |
+              kubectl apply -f deployment.yaml
+              kubectl apply -f service.yaml
+
+         - name: Verify Deployment
+           run: |
+              kubectl get pods
+              kubectl get svc
