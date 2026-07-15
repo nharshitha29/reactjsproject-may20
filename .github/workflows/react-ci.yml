@@ -51,11 +51,16 @@ jobs:
            with:
              username: ${{ secrets.DOCKER_USERNAME }}
              password: ${{ secrets.DOCKER_PASSWORD }}
+
          - name: Build Docker Image
            run: |
               docker build -t ${{ secrets.DOCKER_USERNAME }}/react-app:${{ github.sha }} .
               docker tag ${{ secrets.DOCKER_USERNAME }}/react-app:${{ github.sha }} \
                      ${{ secrets.DOCKER_USERNAME }}/react-app:latest
+
          - name: Push Docker Image
            run: |
               docker push ${{ secrets.DOCKER_USERNAME }}/react-app:latest
+         
+         
+         
